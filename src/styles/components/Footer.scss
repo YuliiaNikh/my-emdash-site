@@ -1,0 +1,145 @@
+.site-footer {
+	background: $color-ibf-primary;
+	overflow: hidden;
+}
+
+.footer {
+	&__inner {
+		max-width: $ibf-container-max;
+		margin-inline: auto;
+		padding: 0 spacing(6);
+		display: flex;
+		align-items: center;
+		gap: spacing(6);
+		position: relative;
+
+		@include below("md") {
+			flex-direction: column;
+			padding: spacing(12) spacing(5);
+		}
+	}
+
+	&__content {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		gap: spacing(8);
+
+		@include below("md") {
+			align-items: center;
+			text-align: center;
+		}
+	}
+
+	&__top {
+		display: flex;
+		align-items: center;
+		gap: spacing(8);
+		flex-wrap: wrap;
+
+		@include below("md") {
+			flex-direction: column;
+			gap: spacing(8);
+		}
+	}
+
+	&__buttons {
+		display: flex;
+		gap: spacing(4);
+
+		@include below("md") {
+			flex-direction: column;
+			width: 100%;
+		}
+	}
+
+	&__btn {
+		@include below("md") {
+			display: flex;
+			width: 100%;
+			justify-content: center;
+		}
+	}
+
+	&__nav {
+		display: flex;
+		align-items: center;
+		gap: spacing(6);
+
+		&-link {
+			font-family: $font-sans;
+			font-size: font-size("base");
+			font-weight: weight("regular");
+			color: white;
+			text-decoration: none;
+			line-height: leading("normal");
+			@include transition(opacity);
+
+			&:hover {
+				opacity: 0.8;
+				color: white;
+			}
+		}
+	}
+
+	&__bottom {
+		display: flex;
+		align-items: flex-start;
+		gap: spacing(6);
+		flex-wrap: wrap;
+
+		@include below("md") {
+			flex-direction: column;
+			gap: spacing(6);
+		}
+	}
+
+	&__copyright {
+		font-family: $font-sans;
+		font-size: font-size("sm");
+		color: $white-muted;
+		line-height: leading("normal");
+	}
+
+	&__legal {
+		display: flex;
+		gap: spacing(6);
+
+		&-link {
+			font-family: $font-sans;
+			font-size: font-size("sm");
+			color: $white-muted;
+			text-decoration: underline;
+			line-height: leading("normal");
+			@include transition(color);
+
+			&:hover {
+				color: $white-soft;
+			}
+		}
+	}
+
+	&__watermark {
+		width: 420px;
+		height: 345px;
+		opacity: 0.23;
+		flex-shrink: 0;
+		position: relative;
+		overflow: hidden;
+
+		@include below("md") {
+			width: 100%;
+			height: 308px;
+		}
+
+		&-img {
+			position: absolute;
+			width: 184%;
+			height: auto;
+			top: -16%;
+			left: -41%;
+			max-width: none;
+		}
+	}
+}

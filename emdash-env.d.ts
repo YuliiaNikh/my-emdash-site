@@ -5,6 +5,47 @@
 
 import type { ContentBylineCredit, PortableTextBlock } from "emdash";
 
+export interface Homepage {
+  id: string;
+  slug: string | null;
+  status: string;
+  title: string;
+  hero_heading: string;
+  hero_description?: string;
+  hero_image?: { id: string; src?: string; alt?: string; width?: number; height?: number };
+  hero_cta_label?: string;
+  hero_cta_url?: string;
+  hero_secondary_label?: string;
+  hero_secondary_url?: string;
+  mission_heading?: string;
+  mission_description?: string;
+  gallery_image_1?: { id: string; src?: string; alt?: string; width?: number; height?: number };
+  gallery_image_2?: { id: string; src?: string; alt?: string; width?: number; height?: number };
+  gallery_image_3?: { id: string; src?: string; alt?: string; width?: number; height?: number };
+  gallery_image_4?: { id: string; src?: string; alt?: string; width?: number; height?: number };
+  how_heading?: string;
+  step_1_text?: string;
+  step_2_text?: string;
+  step_3_text?: string;
+  how_cta_label?: string;
+  how_cta_url?: string;
+  impact_heading?: string;
+  stat_1_number?: number;
+  stat_1_label?: string;
+  stat_2_number?: number;
+  stat_2_label?: string;
+  stat_3_number?: number;
+  stat_3_label?: string;
+  stat_4_number?: number;
+  stat_4_label?: string;
+  impact_cta_label?: string;
+  impact_cta_url?: string;
+  createdAt: Date;
+  updatedAt: Date;
+  publishedAt: Date | null;
+  bylines?: ContentBylineCredit[];
+}
+
 export interface Page {
   id: string;
   slug: string | null;
@@ -33,6 +74,7 @@ export interface Post {
 
 declare module "emdash" {
   interface EmDashCollections {
+    homepage: Homepage;
     pages: Page;
     posts: Post;
   }

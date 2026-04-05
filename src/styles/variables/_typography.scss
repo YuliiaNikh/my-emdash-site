@@ -1,0 +1,153 @@
+@use "variables" as *;
+@use "functions" as *;
+@use "mixins" as *;
+
+// ============================================================
+// Typography — mixins for type presets
+//
+// Heading sizes use CSS clamp() for fluid scaling between
+// 320px and 1200px viewports. Body / meta / label stay fixed.
+// ============================================================
+
+// ---- Heading presets ----
+
+/// Apply a heading preset with fluid sizing via clamp().
+/// Font-size scales smoothly between mobile (320 px) and
+/// desktop (1 200 px) viewports — no breakpoints needed.
+///
+/// @param {Number} $level [1] - Heading level (1–6)
+///
+/// @example
+///   .page-title { @include heading(1); }
+///   .card-title { @include heading(4); }
+@mixin heading($level: 1) {
+  font-family: var(--font-family-heading);
+  line-height: leading("tight");
+  letter-spacing: normal;
+
+  @if $level == 1 {
+    font-size: #{fluid(2rem, 3.5rem)};
+    font-weight: weight("medium");
+  } @else if $level == 2 {
+    font-size: #{fluid(1.75rem, 2.5rem)};
+    font-weight: weight("medium");
+  } @else if $level == 3 {
+    font-size: #{fluid(1.375rem, 2rem)};
+    font-weight: weight("medium");
+  } @else if $level == 4 {
+    font-size: #{fluid(1.25rem, 1.5rem)};
+    font-weight: weight("medium");
+  } @else if $level == 5 {
+    font-size: #{fluid(1.125rem, 1.25rem)};
+    font-weight: weight("medium");
+  } @else if $level == 6 {
+    font-size: #{fluid(1rem, 1.125rem)};
+    font-weight: weight("medium");
+  }
+}
+
+/// Custom fluid heading — pass your own min / max sizes.
+///
+/// @param {Number} $min - Minimum font-size (rem)
+/// @param {Number} $max - Maximum font-size (rem)
+///
+/// @example
+///   .hero-title { @include heading-fluid(2rem, 4rem); }
+@mixin heading-fluid($min, $max) {
+  font-family: var(--font-family-heading);
+  font-size: #{fluid($min, $max)};
+  font-weight: weight("medium");
+  line-height: leading("tight");
+  letter-spacing: normal;
+}
+
+// ---- Body text presets ----
+
+/// Standard body text.
+/// @param {String} $size ["base"] - Type-scale key
+@mixin body-text($size: "base") {
+  font-family: $font-sans;
+  font-size: font-size($size);
+  line-height: leading("relaxed");
+  color: $color-text;
+}
+
+/// Secondary / supporting text.
+/// @param {String} $size ["base"] - Type-scale key
+@mixin body-secondary($size: "base") {
+  font-family: $font-sans;
+  font-size: font-size($size);
+  line-height: leading("relaxed");
+  color: $color-text-secondary;
+}
+
+// ---- Meta & label text ----
+
+/// Small meta text (dates, reading time, bylines).
+@mixin meta-text {
+  font-family: $font-sans;
+  font-size: font-size("sm");
+  line-height: leading("normal");
+  color: $color-muted;
+}
+
+/// Uppercase label text (section titles, widget headings).
+/// @param {String} $size ["xs"] - Type-scale key
+@mixin label-text($size: "xs") {
+  font-family: $font-sans;
+  font-size: font-size($size);
+  font-weight: weight("medium");
+  text-transform: uppercase;
+  letter-spacing: tracking("wider");
+  color: $color-muted;
+}
+
+// ---- Monospace & code ----
+
+/// Inline code snippet.
+@mixin code-inline {
+  font-family: $font-mono;
+  font-size: 0.9em;
+  background: $color-surface;
+  padding: 0.2em 0.4em;
+  border-radius: $radius;
+}
+
+/// Code block (pre).
+@mixin code-block {
+  font-family: $font-mono;
+  font-size: font-size("sm");
+  line-height: 1.6;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  padding: spacing(5);
+  overflow-x: auto;
+}
+
+// ---- Link presets ----
+
+/// Standard navigation link.
+/// @param {*} $color [$color-accent]
+/// @param {*} $hover [$color-accent-hover]
+@mixin link($color: $color-accent, $hover: $color-accent-hover) {
+  color: $color;
+  text-decoration: none;
+  @include transition(color);
+
+  &:hover {
+    color: $hover;
+  }
+}
+
+/// Underlined content link (for article prose).
+@mixin link-underline {
+  color: $color-accent;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+
+  &:hover {
+    text-decoration-thickness: 2px;
+  }
+}

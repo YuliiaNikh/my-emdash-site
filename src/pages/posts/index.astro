@@ -13,7 +13,6 @@ const sortedPosts = posts.toSorted((a, b) => {
 	return dateB - dateA;
 });
 
-// Fetch tags for each post (bylines are already hydrated by getEmDashCollection)
 const postsWithTags = await Promise.all(
 	sortedPosts.map(async (post) => {
 		const tags = await getEntryTerms("posts", post.data.id, "tag");
@@ -31,10 +30,12 @@ const formatDate = (date: Date) =>
 ---
 
 <Base title="All Posts" description="Browse all blog posts">
-	<div class="posts-page">
-		<header class="page-header">
-			<h1 class="page-title">All Posts</h1>
-			<p class="page-description">
+	<div class="max-w-content mx-auto py-8 px-6 pb-16 max-sm:py-6 max-sm:px-4 max-sm:pb-12">
+		<header class="mb-12">
+			<h1 class="text-4xl max-sm:text-3xl font-medium mb-2">
+				All Posts
+			</h1>
+			<p class="text-lg text-muted">
 				{posts.length}
 				{posts.length === 1 ? "article" : "articles"}
 			</p>
@@ -42,35 +43,48 @@ const formatDate = (date: Date) =>
 
 		{
 			sortedPosts.length === 0 ? (
-				<p class="empty">No posts yet.</p>
+				<p class="text-muted text-lg">No posts yet.</p>
 			) : (
-				<div class="posts-list">
-					{postsWithTags.map(({ post, tags, bylines }) => (
-						<article class="post-item">
-							<a href={`/posts/${post.id}`} class="post-link">
-								<div class="post-meta">
+				<div class="flex flex-col">
+					{postsWithTags.map(({ post, tags, bylines }, i) => (
+						<article
+							class:list={[
+								"py-8 border-b border-border-subtle",
+								i === 0 && "pt-0",
+								i === postsWithTags.length - 1 && "border-b-0",
+							]}
+						>
+							<a
+								href={`/posts/${post.id}`}
+								class="group block no-underline text-inherit"
+							>
+								<div class="flex items-center gap-3 text-sm text-muted mb-2">
 									{bylines.length > 0 && (
 										<>
-											<div class="post-bylines">
+											<div class="flex items-center gap-0.5">
 												{bylines.slice(0, 2).map((credit, index) => (
 													<>
-														{index > 0 && <span class="byline-sep">,</span>}
-														<span class="post-byline">
+														{index > 0 && (
+															<span class="text-muted mr-0.5">,</span>
+														)}
+														<span class="inline-flex items-center gap-1">
 															{credit.byline.avatarMediaId && (
 																<img
 																	src={`/_emdash/api/media/file/${credit.byline.avatarMediaId}`}
 																	alt={credit.byline.displayName}
-																	class="post-byline-avatar"
+																	class="w-5 h-5 rounded-full object-cover"
 																/>
 															)}
-															<span class="post-byline-name">
+															<span class="font-medium text-text-secondary">
 																{credit.byline.displayName}
 															</span>
 														</span>
 													</>
 												))}
 												{bylines.length > 2 && (
-													<span class="byline-more">+{bylines.length - 2}</span>
+													<span class="text-xs text-muted ml-0.5">
+														+{bylines.length - 2}
+													</span>
 												)}
 											</div>
 											<span class="meta-dot" />
@@ -82,15 +96,19 @@ const formatDate = (date: Date) =>
 									{post.data.publishedAt && <span class="meta-dot" />}
 									<span>{getReadingTime(post.data.content)} min read</span>
 								</div>
-								<h2 class="post-title">{post.data.title}</h2>
+								<h2 class="text-2xl max-sm:text-xl font-medium leading-snug mb-2 transition-colors duration-fast group-hover:text-accent">
+									{post.data.title}
+								</h2>
 								{post.data.excerpt && (
-									<p class="post-excerpt">{post.data.excerpt}</p>
+									<p class="text-lg leading-relaxed text-text-secondary">
+										{post.data.excerpt}
+									</p>
 								)}
 							</a>
 							{tags.length > 0 && (
-								<div class="post-tags">
+								<div class="flex flex-wrap gap-2 mt-4">
 									{tags.slice(0, 3).map((t) => (
-										<a href={`/tag/${t.slug}`} class="post-tag">
+										<a href={`/tag/${t.slug}`} class="tag-pill-sm">
 											{t.label}
 										</a>
 									))}
@@ -103,166 +121,3 @@ const formatDate = (date: Date) =>
 		}
 	</div>
 </Base>
-
-<style>
-	.posts-page {
-		max-width: var(--content-width);
-		margin: 0 auto;
-		padding: var(--spacing-8) var(--spacing-6) var(--spacing-16);
-	}
-
-	.page-header {
-		margin-bottom: var(--spacing-12);
-	}
-
-	.page-title {
-		font-size: var(--font-size-4xl);
-		font-weight: 700;
-		letter-spacing: var(--tracking-tight);
-		margin-bottom: var(--spacing-2);
-	}
-
-	.page-description {
-		font-size: var(--font-size-lg);
-		color: var(--color-muted);
-	}
-
-	.empty {
-		color: var(--color-muted);
-		font-size: var(--font-size-lg);
-	}
-
-	.posts-list {
-		display: flex;
-		flex-direction: column;
-	}
-
-	.post-item {
-		padding: var(--spacing-8) 0;
-		border-bottom: 1px solid var(--color-border-subtle);
-	}
-
-	.post-item:first-child {
-		padding-top: 0;
-	}
-
-	.post-item:last-child {
-		border-bottom: none;
-	}
-
-	.post-link {
-		display: block;
-		text-decoration: none;
-		color: inherit;
-	}
-
-	.post-meta {
-		display: flex;
-		align-items: center;
-		gap: var(--spacing-3);
-		font-size: var(--font-size-sm);
-		color: var(--color-muted);
-		margin-bottom: var(--spacing-2);
-	}
-
-	.meta-dot {
-		width: 3px;
-		height: 3px;
-		border-radius: 50%;
-		background: var(--color-muted);
-	}
-
-	/* Post bylines */
-	.post-bylines {
-		display: flex;
-		align-items: center;
-		gap: 2px;
-	}
-
-	.post-byline {
-		display: inline-flex;
-		align-items: center;
-		gap: var(--spacing-1);
-	}
-
-	.post-byline-avatar {
-		width: var(--avatar-size-sm);
-		height: var(--avatar-size-sm);
-		border-radius: 50%;
-		object-fit: cover;
-	}
-
-	.post-byline-name {
-		font-weight: 500;
-		color: var(--color-text-secondary);
-	}
-
-	.byline-sep {
-		color: var(--color-muted);
-		margin-right: 2px;
-	}
-
-	.byline-more {
-		font-size: var(--font-size-xs);
-		color: var(--color-muted);
-		margin-left: 2px;
-	}
-
-	.post-title {
-		font-size: var(--font-size-2xl);
-		font-weight: 600;
-		line-height: var(--leading-snug);
-		letter-spacing: var(--tracking-snug);
-		margin-bottom: var(--spacing-2);
-		transition: color var(--transition-fast);
-	}
-
-	.post-link:hover .post-title {
-		color: var(--color-accent);
-	}
-
-	.post-excerpt {
-		font-size: var(--font-size-lg);
-		line-height: var(--leading-relaxed);
-		color: var(--color-text-secondary);
-	}
-
-	.post-tags {
-		display: flex;
-		flex-wrap: wrap;
-		gap: var(--spacing-2);
-		margin-top: var(--spacing-4);
-	}
-
-	.post-tag {
-		display: inline-block;
-		padding: var(--tag-padding-y) var(--spacing-3);
-		font-size: var(--font-size-sm);
-		color: var(--color-text-secondary);
-		background: var(--color-surface);
-		border-radius: var(--radius);
-		text-decoration: none;
-		transition:
-			color var(--transition-fast),
-			background var(--transition-fast);
-	}
-
-	.post-tag:hover {
-		color: var(--color-text);
-		background: var(--color-border);
-	}
-
-	@media (max-width: 600px) {
-		.posts-page {
-			padding: var(--spacing-6) var(--spacing-4) var(--spacing-12);
-		}
-
-		.page-title {
-			font-size: var(--font-size-3xl);
-		}
-
-		.post-title {
-			font-size: var(--font-size-xl);
-		}
-	}
-</style>

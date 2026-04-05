@@ -8,8 +8,8 @@
 	},
 
 	"settings": {
-		"title": "My Blog",
-		"tagline": "Thoughts on building for the web"
+		"title": "IBF - Israel Business Fund",
+		"tagline": "Empowering Israeli Businesses. Creating Jobs. Strengthening Israel."
 	},
 
 	"collections": [
@@ -51,19 +51,51 @@
 			"labelSingular": "Page",
 			"supports": ["drafts", "revisions", "search"],
 			"fields": [
-				{
-					"slug": "title",
-					"label": "Title",
-					"type": "string",
-					"required": true,
-					"searchable": true
-				},
-				{
-					"slug": "content",
-					"label": "Content",
-					"type": "portableText",
-					"searchable": true
-				}
+				{ "slug": "title", "label": "Title", "type": "string", "required": true, "searchable": true },
+				{ "slug": "content", "label": "Content", "type": "portableText", "searchable": true }
+			]
+		},
+		{
+			"slug": "homepage",
+			"label": "Homepage",
+			"labelSingular": "Homepage",
+			"supports": ["drafts", "revisions"],
+			"fields": [
+				{ "slug": "title", "label": "Page Title", "type": "string", "required": true },
+
+				{ "slug": "hero_heading", "label": "Hero — Heading", "type": "text", "required": true },
+				{ "slug": "hero_description", "label": "Hero — Description", "type": "text" },
+				{ "slug": "hero_image", "label": "Hero — Background Image", "type": "image" },
+				{ "slug": "hero_cta_label", "label": "Hero — Primary Button Label", "type": "string" },
+				{ "slug": "hero_cta_url", "label": "Hero — Primary Button URL", "type": "string" },
+				{ "slug": "hero_secondary_label", "label": "Hero — Secondary Button Label", "type": "string" },
+				{ "slug": "hero_secondary_url", "label": "Hero — Secondary Button URL", "type": "string" },
+
+				{ "slug": "mission_heading", "label": "Mission — Heading", "type": "text" },
+				{ "slug": "mission_description", "label": "Mission — Description", "type": "text" },
+				{ "slug": "gallery_image_1", "label": "Mission — Gallery Image 1 (large)", "type": "image" },
+				{ "slug": "gallery_image_2", "label": "Mission — Gallery Image 2", "type": "image" },
+				{ "slug": "gallery_image_3", "label": "Mission — Gallery Image 3", "type": "image" },
+				{ "slug": "gallery_image_4", "label": "Mission — Gallery Image 4 (tall)", "type": "image" },
+
+				{ "slug": "how_heading", "label": "How It Works — Heading", "type": "string" },
+				{ "slug": "step_1_text", "label": "How It Works — Step 1", "type": "text" },
+				{ "slug": "step_2_text", "label": "How It Works — Step 2", "type": "text" },
+				{ "slug": "step_3_text", "label": "How It Works — Step 3", "type": "text" },
+				{ "slug": "how_cta_label", "label": "How It Works — Button Label", "type": "string" },
+				{ "slug": "how_cta_url", "label": "How It Works — Button URL", "type": "string" },
+
+				{ "slug": "impact_heading", "label": "Impact — Heading", "type": "string" },
+				{ "slug": "stat_1_number", "label": "Impact — Stat 1 Number", "type": "integer" },
+				{ "slug": "stat_1_label", "label": "Impact — Stat 1 Label", "type": "string" },
+				{ "slug": "stat_2_number", "label": "Impact — Stat 2 Number", "type": "integer" },
+				{ "slug": "stat_2_label", "label": "Impact — Stat 2 Label", "type": "string" },
+				{ "slug": "stat_3_number", "label": "Impact — Stat 3 Number", "type": "integer" },
+				{ "slug": "stat_3_label", "label": "Impact — Stat 3 Label", "type": "string" },
+				{ "slug": "stat_4_number", "label": "Impact — Stat 4 Number", "type": "integer" },
+				{ "slug": "stat_4_label", "label": "Impact — Stat 4 Label", "type": "string" },
+				{ "slug": "impact_cta_label", "label": "Impact — Button Label", "type": "string" },
+				{ "slug": "impact_cta_url", "label": "Impact — Button URL", "type": "string" }
 			]
 		}
 	],
@@ -115,9 +147,28 @@
 			"name": "primary",
 			"label": "Primary Navigation",
 			"items": [
-				{ "type": "custom", "label": "Home", "url": "/" },
-				{ "type": "custom", "label": "About", "url": "/pages/about" },
-				{ "type": "custom", "label": "Posts", "url": "/posts" }
+				{ "type": "custom", "label": "About", "url": "/about" },
+				{ "type": "custom", "label": "Impact", "url": "/impact" },
+				{ "type": "custom", "label": "FAQ", "url": "/faq" },
+				{ "type": "custom", "label": "Contact IBF", "url": "/contact" }
+			]
+		},
+		{
+			"name": "footer",
+			"label": "Footer Navigation",
+			"items": [
+				{ "type": "custom", "label": "About", "url": "/about" },
+				{ "type": "custom", "label": "Impact", "url": "/impact" },
+				{ "type": "custom", "label": "FAQ", "url": "/faq" }
+			]
+		},
+		{
+			"name": "footer-legal",
+			"label": "Footer Legal Links",
+			"items": [
+				{ "type": "custom", "label": "Privacy Policy", "url": "/privacy" },
+				{ "type": "custom", "label": "Terms of Service", "url": "/terms" },
+				{ "type": "custom", "label": "Cookies Settings", "url": "/cookies" }
 			]
 		}
 	],
@@ -188,53 +239,48 @@
 		}
 	],
 
-	"sections": [
-		{
-			"slug": "newsletter-signup",
-			"title": "Newsletter Signup",
-			"description": "A call-to-action block for newsletter subscriptions",
-			"keywords": ["newsletter", "subscribe", "email", "cta"],
-			"source": "theme",
-			"content": [
-				{
-					"_type": "block",
-					"style": "h3",
-					"children": [{ "_type": "span", "text": "Stay in the loop" }]
-				},
-				{
-					"_type": "block",
-					"style": "normal",
-					"children": [
-						{
-							"_type": "span",
-							"text": "Get notified when new posts are published. No spam, unsubscribe anytime."
-						}
-					]
-				}
-			]
-		},
-		{
-			"slug": "about-author",
-			"title": "About the Author",
-			"description": "Brief author bio for use in posts or pages",
-			"keywords": ["author", "bio", "about"],
-			"source": "theme",
-			"content": [
-				{
-					"_type": "block",
-					"style": "normal",
-					"children": [
-						{
-							"_type": "span",
-							"text": "A software developer who writes about building things on the web. Based somewhere with good coffee and reliable internet."
-						}
-					]
-				}
-			]
-		}
-	],
+	"sections": [],
 
 	"content": {
+		"homepage": [
+			{
+				"id": "home",
+				"slug": "home",
+				"status": "published",
+				"data": {
+					"title": "Homepage",
+
+					"hero_heading": "Empowering Israeli Businesses. Creating Jobs. Strengthening Israel.",
+					"hero_description": "IBF – Israel Business Fund provides growth and equipment grants to established Israeli businesses, with a focus on Judea and Samaria.",
+					"hero_cta_label": "Apply for an IBF Grant",
+					"hero_cta_url": "/apply",
+					"hero_secondary_label": "Learn More",
+					"hero_secondary_url": "/about",
+
+					"mission_heading": "IBF – Israel Business Fund supports existing Israeli businesses that are ready to scale, expand operations, and create jobs.",
+					"mission_description": "We believe in the highest form of giving — empowering people through enterprise, not short-term aid. Our grants help businesses purchase equipment, improve infrastructure, and unlock long-term economic growth.",
+
+					"how_heading": "How It Works",
+					"step_1_text": "Eligible businesses download and complete the IBF grant application",
+					"step_2_text": "Applications are reviewed by IBF leadership and local representatives",
+					"step_3_text": "Approved grants are paid directly to vendors, ensuring transparency and accountability",
+					"how_cta_label": "Apply for an IBF Grant",
+					"how_cta_url": "/apply",
+
+					"impact_heading": "Our Impact",
+					"stat_1_number": 1275,
+					"stat_1_label": "Businesses Supported",
+					"stat_2_number": 364,
+					"stat_2_label": "Jobs Created",
+					"stat_3_number": 90233,
+					"stat_3_label": "(₪) Granted",
+					"stat_4_number": 24,
+					"stat_4_label": "Communities Strengthened",
+					"impact_cta_label": "Learn more about IBF's impact",
+					"impact_cta_url": "/impact"
+				}
+			}
+		],
 		"pages": [
 			{
 				"id": "about",

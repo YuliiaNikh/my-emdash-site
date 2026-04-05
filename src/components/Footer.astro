@@ -1,0 +1,75 @@
+---
+import { getMenu } from "emdash";
+import "../styles/components/Footer.scss";
+
+const footerMenu = await getMenu("footer");
+const legalMenu = await getMenu("footer-legal");
+---
+
+<footer class="site-footer">
+	<div class="footer__inner">
+		<div class="footer__content">
+			<div class="footer__top">
+				<div class="footer__buttons">
+					<a
+						href="/apply"
+						class="ibf-btn ibf-btn--gold ibf-btn--lg footer__btn"
+						>Apply for an IBF Grant</a
+					>
+					<a
+						href="/support"
+						class="ibf-btn ibf-btn--outline-white ibf-btn--lg footer__btn"
+						>Support IBF</a
+					>
+				</div>
+
+				{
+					footerMenu && footerMenu.items.length > 0 && (
+						<nav class="footer__nav">
+							{footerMenu.items.map((item) => (
+								<a
+									href={item.url}
+									target={item.target}
+									class="footer__nav-link"
+								>
+									{item.label}
+								</a>
+							))}
+						</nav>
+					)
+				}
+			</div>
+
+			<div class="footer__bottom">
+				<p class="footer__copyright">
+					&copy; {new Date().getFullYear()} Israel Business Fund. All rights
+					reserved.
+				</p>
+				{
+					legalMenu && legalMenu.items.length > 0 && (
+						<nav class="footer__legal">
+							{legalMenu.items.map((item) => (
+								<a
+									href={item.url}
+									target={item.target}
+									class="footer__legal-link"
+								>
+									{item.label}
+								</a>
+							))}
+						</nav>
+					)
+				}
+			</div>
+		</div>
+
+		<div class="footer__watermark">
+			<img
+				src="/images/ibf-logo-white.png"
+				alt=""
+				aria-hidden="true"
+				class="footer__watermark-img"
+			/>
+		</div>
+	</div>
+</footer>

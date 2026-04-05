@@ -1,0 +1,55 @@
+// ============================================================
+// Design System — generates CSS utility classes from SCSS.
+// Imported once in Base.astro alongside global.css.
+// ============================================================
+
+@use "variables/variables" as *;
+@use "variables/functions" as *;
+@use "variables/mixins" as *;
+@use "variables/typography" as *;
+@use "variables/buttons" as *;
+@use "variables/colors" as *;
+
+// ---- Button classes ----
+// Usage:
+//   <button class="btn">Primary</button>
+//   <button class="btn btn--secondary btn--sm">Secondary small</button>
+//   <button class="btn btn--ghost btn--lg">Ghost large</button>
+//   <button class="btn btn--danger">Delete</button>
+//   <a href="/cta" class="btn btn--lg btn--block">Full-width CTA</a>
+
+@include generate-button-classes;
+
+// ---- Tag pill classes (migrated from global.css) ----
+
+.tag-pill {
+  display: inline-block;
+  padding: 2px spacing(2);
+  font-size: font-size("xs");
+  color: $color-text-secondary;
+  background: $color-surface;
+  border-radius: $radius;
+  text-decoration: none;
+  @include transition((color, background));
+
+  &:hover {
+    color: $color-text;
+    background: $color-border;
+  }
+}
+
+.tag-pill-sm {
+  display: inline-block;
+  padding: spacing(1) spacing(3);
+  font-size: font-size("sm");
+  color: $color-text-secondary;
+  background: $color-surface;
+  border-radius: $radius;
+  text-decoration: none;
+  @include transition((color, background));
+
+  &:hover {
+    color: $color-text;
+    background: $color-border;
+  }
+}

@@ -1,0 +1,165 @@
+// ============================================================
+// Design Tokens
+// Single source of truth — mirrors Tailwind @theme in global.css.
+// SCSS variables reference CSS custom properties so they respond
+// to dark-mode overrides automatically.
+// ============================================================
+
+// ---- Colors (resolve at runtime via CSS custom properties) ----
+
+$color-bg:              var(--color-bg);
+$color-bg-subtle:       var(--color-bg-subtle);
+$color-text:            var(--color-text);
+$color-text-secondary:  var(--color-text-secondary);
+$color-muted:           var(--color-muted);
+$color-border:          var(--color-border);
+$color-border-subtle:   var(--color-border-subtle);
+$color-surface:         var(--color-surface);
+$color-accent:          var(--color-accent);
+$color-accent-hover:    var(--color-accent-hover);
+$color-on-accent:       var(--color-on-accent);
+$color-accent-ring:     var(--color-accent-ring);
+
+// ---- Raw color values (for SCSS color functions that need literals) ----
+
+$palette-light: (
+  "bg":              #ffffff,
+  "bg-subtle":       #fafafa,
+  "text":            #1a1a1a,
+  "text-secondary":  #525252,
+  "muted":           #8b8b8b,
+  "border":          #e5e5e5,
+  "border-subtle":   #f0f0f0,
+  "surface":         #f7f7f7,
+  "accent":          #0066cc,
+  "accent-hover":    #0052a3,
+  "on-accent":       #ffffff,
+);
+
+$palette-dark: (
+  "bg":              #0d0d0d,
+  "bg-subtle":       #141414,
+  "text":            #ededed,
+  "text-secondary":  #a0a0a0,
+  "muted":           #6b6b6b,
+  "border":          #2a2a2a,
+  "border-subtle":   #1f1f1f,
+  "surface":         #181818,
+  "accent":          #4d9fff,
+  "accent-hover":    #6eb0ff,
+  "on-accent":       #ffffff,
+);
+
+// ---- Fonts ----
+
+$font-sans:    var(--font-family-sans);
+$font-heading: var(--font-family-heading);
+$font-mono:    var(--font-family-mono);
+
+// ---- Type scale ----
+
+$type-scale: (
+  "xs":   var(--font-size-xs),
+  "sm":   var(--font-size-sm),
+  "base": var(--font-size-base),
+  "lg":   var(--font-size-lg),
+  "xl":   var(--font-size-xl),
+  "2xl":  var(--font-size-2xl),
+  "3xl":  var(--font-size-3xl),
+  "4xl":  var(--font-size-4xl),
+  "5xl":  var(--font-size-5xl),
+);
+
+// ---- Line heights ----
+
+$line-heights: (
+  "tight":   var(--leading-tight),
+  "snug":    var(--leading-snug),
+  "normal":  var(--leading-normal),
+  "relaxed": var(--leading-relaxed),
+);
+
+// ---- Letter spacing ----
+
+$trackings: (
+  "tight":  var(--tracking-tight),
+  "snug":   var(--tracking-snug),
+  "wide":   var(--tracking-wide),
+  "wider":  var(--tracking-wider),
+);
+
+// ---- Font weights ----
+
+$weights: (
+  "regular":  400,
+  "medium":   500,
+  "semibold": 600,
+  "bold":     700,
+);
+
+// ---- Spacing (matches Tailwind's default scale) ----
+
+$spacing: (
+  0:  0,
+  1:  0.25rem,
+  2:  0.5rem,
+  3:  0.75rem,
+  4:  1rem,
+  5:  1.25rem,
+  6:  1.5rem,
+  8:  2rem,
+  10: 2.5rem,
+  12: 3rem,
+  16: 4rem,
+  20: 5rem,
+  24: 6rem,
+);
+
+// ---- Border radius ----
+
+$radius:    var(--radius-DEFAULT);
+$radius-lg: var(--radius-lg);
+$radius-full: 9999px;
+
+// ---- Layout ----
+
+$width-content: var(--width-content);
+$width-wide:    var(--width-wide);
+$nav-height:    64px;
+
+// ---- Transitions ----
+
+$duration-fast: var(--duration-fast);
+$duration-base: var(--duration-base);
+$ease-default:  ease;
+
+// ---- Shadows ----
+
+$shadow-dropdown:   var(--shadow-dropdown);
+$shadow-btn-active: var(--shadow-btn-active);
+
+// ---- Breakpoints ----
+
+$breakpoints: (
+  "sm": 640px,
+  "md": 900px,
+  "lg": 1100px,
+);
+
+// ---- IBF Brand ----
+
+$color-ibf-primary:    var(--color-ibf-primary);
+$color-ibf-dark:       var(--color-ibf-dark);
+$color-ibf-navy:       var(--color-ibf-navy);
+$color-ibf-gold:       var(--color-ibf-gold);
+$color-ibf-gold-hover: var(--color-ibf-gold-hover);
+$color-ibf-beige:      var(--color-ibf-beige);
+$color-ibf-heading:    var(--color-ibf-heading);
+$color-ibf-body:       var(--color-ibf-body);
+
+$ibf-navbar-height:    72px;
+$ibf-container-max:    1312px;
+$ibf-shadow-card:      0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+$white-overlay:        rgba(255, 255, 255, 0.1);
+$white-muted:          rgba(255, 255, 255, 0.6);
+$white-soft:           rgba(255, 255, 255, 0.9);

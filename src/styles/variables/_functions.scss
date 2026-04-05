@@ -1,0 +1,136 @@
+@use "sass:map";
+@use "sass:math";
+@use "sass:color";
+@use "sass:meta";
+@use "variables" as *;
+
+// ============================================================
+// Getter functions — pull values from design-token maps
+// ============================================================
+
+/// Get a font size from the type scale.
+/// @param {String} $name - xs | sm | base | lg | xl | 2xl | 3xl | 4xl | 5xl
+@function font-size($name) {
+  @if not map.has-key($type-scale, $name) {
+    @error "Unknown font-size `#{$name}`. Expected one of: #{map.keys($type-scale)}";
+  }
+  @return map.get($type-scale, $name);
+}
+
+/// Get a line-height value.
+/// @param {String} $name - tight | snug | normal | relaxed
+@function leading($name) {
+  @if not map.has-key($line-heights, $name) {
+    @error "Unknown leading `#{$name}`. Expected one of: #{map.keys($line-heights)}";
+  }
+  @return map.get($line-heights, $name);
+}
+
+/// Get a letter-spacing value.
+/// @param {String} $name - tight | snug | wide | wider
+@function tracking($name) {
+  @if not map.has-key($trackings, $name) {
+    @error "Unknown tracking `#{$name}`. Expected one of: #{map.keys($trackings)}";
+  }
+  @return map.get($trackings, $name);
+}
+
+/// Get a font-weight value.
+/// @param {String} $name - regular | medium | semibold | bold
+@function weight($name) {
+  @if not map.has-key($weights, $name) {
+    @error "Unknown weight `#{$name}`. Expected one of: #{map.keys($weights)}";
+  }
+  @return map.get($weights, $name);
+}
+
+/// Get a spacing value.
+/// @param {Number} $key - 0 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10 | 12 | 16 | 20 | 24
+@function spacing($key) {
+  @if not map.has-key($spacing, $key) {
+    @error "Unknown spacing `#{$key}`. Expected one of: #{map.keys($spacing)}";
+  }
+  @return map.get($spacing, $key);
+}
+
+/// Get a breakpoint value.
+/// @param {String} $name - sm | md | lg
+@function breakpoint-value($name) {
+  @if not map.has-key($breakpoints, $name) {
+    @error "Unknown breakpoint `#{$name}`. Expected one of: #{map.keys($breakpoints)}";
+  }
+  @return map.get($breakpoints, $name);
+}
+
+// ============================================================
+// Unit conversion
+// ============================================================
+
+/// Convert px to rem.
+/// @param {Number} $px - Value in pixels (unitless or with px)
+/// @param {Number} $base [16] - Root font size in pixels
+@function to-rem($px, $base: 16) {
+  @return math.div($px, $base) * 1rem;
+}
+
+/// Convert rem to px (for reference only).
+/// @param {Number} $rem - Value in rem
+/// @param {Number} $base [16] - Root font size in pixels
+@function to-px($rem, $base: 16) {
+  @return math.div($rem, 1rem) * $base * 1px;
+}
+
+/// Generate a CSS clamp() for fluid typography.
+/// Linearly interpolates between $min and $max across the viewport range.
+/// @param {Number} $min    - Minimum size in rem
+/// @param {Number} $max    - Maximum size in rem
+/// @param {Number} $vw-min [320]  - Viewport floor in px
+/// @param {Number} $vw-max [1200] - Viewport ceiling in px
+@function fluid($min, $max, $vw-min: 320, $vw-max: 1200) {
+  $min-v: math.div($min, 1rem);
+  $max-v: math.div($max, 1rem);
+  $slope: math.div(($max-v - $min-v) * 1600, $vw-max - $vw-min);
+  $intercept: $min-v - math.div($slope * $vw-min, 1600);
+  $slope-r: math.div(math.round($slope * 10000), 10000);
+  $intercept-r: math.div(math.round($intercept * 10000), 10000);
+  @return clamp(#{$min}, #{$intercept-r}rem + #{$slope-r}vw, #{$max});
+}
+
+// ============================================================
+// Color manipulation (requires raw hex values, not CSS vars)
+// ============================================================
+
+/// Lighten a color by mixing with white.
+/// @param {Color} $col - Base color
+/// @param {Number} $amount - Percentage (0–100)
+@function tint($col, $amount) {
+  @return color.mix(white, $col, $amount);
+}
+
+/// Darken a color by mixing with black.
+/// @param {Color} $col - Base color
+/// @param {Number} $amount - Percentage (0–100)
+@function shade($col, $amount) {
+  @return color.mix(black, $col, $amount);
+}
+
+/// Return black or white depending on background luminance.
+/// @param {Color} $bg - Background color
+@function contrast-color($bg) {
+  $r: color.red($bg);
+  $g: color.green($bg);
+  $b: color.blue($bg);
+  $luminance: math.div(0.299 * $r + 0.587 * $g + 0.114 * $b, 255);
+  @return if($luminance > 0.5, #1a1a1a, #ffffff);
+}
+
+/// Get a raw color value from a palette map.
+/// @param {String} $name - Color key name
+/// @param {String} $mode ["light"] - light | dark
+@function palette($name, $mode: "light") {
+  $pal: if($mode == "dark", $palette-dark, $palette-light);
+  @if not map.has-key($pal, $name) {
+    @error "Unknown palette color `#{$name}` in #{$mode} mode.";
+  }
+  @return map.get($pal, $name);
+}

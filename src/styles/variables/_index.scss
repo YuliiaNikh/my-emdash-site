@@ -1,0 +1,12 @@
+// ============================================================
+// Barrel file — @forward everything so consumers can do:
+//   @use "variables" as *;
+// and get all variables, functions, and mixins.
+// ============================================================
+
+@forward "variables";
+@forward "functions";
+@forward "colors";
+@forward "mixins";
+@forward "typography";
+@forward "buttons";

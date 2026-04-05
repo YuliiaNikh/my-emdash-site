@@ -1,0 +1,188 @@
+---
+import { getMenu } from "emdash";
+import LiveSearch from "emdash/ui/search";
+import "../styles/components/Header.scss";
+
+const primaryMenu = await getMenu("primary");
+
+const navItems = primaryMenu?.items ?? [
+	{ label: "About", url: "/about", target: undefined },
+	{ label: "Impact", url: "/impact", target: undefined },
+	{ label: "FAQ", url: "/faq", target: undefined },
+	{ label: "Contact IBF", url: "/contact", target: undefined },
+];
+---
+
+<header class="site-header">
+	<nav class="navbar">
+		<div class="navbar__inner">
+			<a href="/" class="navbar__logo-card">
+				<img
+					src="/images/ibf-logo.png"
+					alt="IBF - Israel Business Fund"
+					class="navbar__logo-img"
+				/>
+			</a>
+
+			<div class="navbar__desktop">
+				<div class="navbar__links">
+					{
+						navItems.map((item) => (
+							<a
+								href={item.url}
+								target={item.target}
+								class="navbar__link"
+							>
+								{item.label}
+							</a>
+						))
+					}
+				</div>
+
+				<div class="navbar__actions">
+					<div class="navbar__search">
+						<LiveSearch
+							placeholder="Search"
+							class="relative w-[224px]"
+							inputClass="ibf-search-input"
+							resultsClass="site-search-results"
+							resultClass="site-search-result"
+							collections={["posts", "pages"]}
+						/>
+					</div>
+					<a href="/apply" class="ibf-btn ibf-btn--gold"
+						>Apply for an IBF Grant</a
+					>
+					<a href="/support" class="ibf-btn ibf-btn--outline-white"
+						>Support IBF</a
+					>
+				</div>
+			</div>
+
+			<div class="navbar__mobile">
+				<a href="/search" class="navbar__icon-btn" aria-label="Search">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					>
+						<circle cx="11" cy="11" r="8"></circle>
+						<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+					</svg>
+				</a>
+				<button
+					class="navbar__icon-btn"
+					aria-label="Open menu"
+					id="hamburger-open"
+				>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					>
+						<line x1="3" y1="6" x2="21" y2="6"></line>
+						<line x1="3" y1="12" x2="21" y2="12"></line>
+						<line x1="3" y1="18" x2="21" y2="18"></line>
+					</svg>
+				</button>
+			</div>
+		</div>
+	</nav>
+
+	<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+		<div class="mobile-menu__header">
+			<a href="/" class="navbar__logo-card navbar__logo-card--sm">
+				<img
+					src="/images/ibf-logo.png"
+					alt="IBF"
+					class="navbar__logo-img navbar__logo-img--sm"
+				/>
+			</a>
+			<div class="mobile-menu__header-right">
+				<a
+					href="/search"
+					class="navbar__icon-btn"
+					aria-label="Search"
+				>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					>
+						<circle cx="11" cy="11" r="8"></circle>
+						<line x1="21" y1="21" x2="16.65" y2="16.65"
+						></line>
+					</svg>
+				</a>
+				<button
+					class="navbar__icon-btn"
+					aria-label="Close menu"
+					id="hamburger-close"
+				>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					>
+						<line x1="18" y1="6" x2="6" y2="18"></line>
+						<line x1="6" y1="6" x2="18" y2="18"></line>
+					</svg>
+				</button>
+			</div>
+		</div>
+
+		<div class="mobile-menu__body">
+			<nav class="mobile-menu__nav">
+				{
+					navItems.map((item) => (
+						<a
+							href={item.url}
+							target={item.target}
+							class="mobile-menu__link"
+						>
+							{item.label}
+						</a>
+					))
+				}
+			</nav>
+			<div class="mobile-menu__buttons">
+				<a
+					href="/apply"
+					class="ibf-btn ibf-btn--gold ibf-btn--block ibf-btn--lg"
+					>Apply for an IBF Grant</a
+				>
+				<a
+					href="/support"
+					class="ibf-btn ibf-btn--outline-white ibf-btn--block ibf-btn--lg"
+					>Learn More</a
+				>
+			</div>
+		</div>
+	</div>
+</header>
+
+<script src="../scripts/header.ts"></script>

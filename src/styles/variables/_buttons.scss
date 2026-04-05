@@ -1,0 +1,178 @@
+@use "variables" as *;
+@use "functions" as *;
+@use "mixins" as *;
+
+// ============================================================
+// Button System
+//
+// Two ways to use:
+//   1. Mixins in component <style lang="scss"> blocks:
+//        .my-cta { @include button("primary", "lg"); }
+//   2. Generated CSS classes (output by design-system.scss):
+//        <button class="btn">Primary</button>
+//        <button class="btn btn--secondary btn--sm">Small</button>
+// ============================================================
+
+// ---- Base ----
+
+/// Shared foundation for every button.
+@mixin btn-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: spacing(2);
+  font-family: $font-sans;
+  font-weight: weight("medium");
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: $radius;
+  cursor: pointer;
+  @include transition((background-color, color, border-color, box-shadow));
+
+  &:disabled,
+  &[aria-disabled="true"] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+// ---- Sizes ----
+
+/// Button size preset.
+/// @param {String} $size ["md"] - sm | md | lg
+@mixin btn-size($size: "md") {
+  @if $size == "sm" {
+    padding: spacing(1) spacing(3);
+    font-size: font-size("xs");
+    min-height: to-rem(28);
+  } @else if $size == "md" {
+    padding: spacing(2) spacing(5);
+    font-size: font-size("sm");
+    min-height: to-rem(36);
+  } @else if $size == "lg" {
+    padding: spacing(3) spacing(6);
+    font-size: font-size("base");
+    min-height: to-rem(44);
+  } @else {
+    @error "Unknown button size `#{$size}`. Expected sm | md | lg.";
+  }
+}
+
+// ---- Variants ----
+
+/// Solid primary button (accent background).
+@mixin btn-primary {
+  background-color: $color-accent;
+  color: $color-on-accent;
+  border-color: $color-accent;
+
+  &:hover:not(:disabled) {
+    background-color: $color-accent-hover;
+    border-color: $color-accent-hover;
+  }
+
+  @include focus-ring;
+}
+
+/// Outlined / secondary button.
+@mixin btn-secondary {
+  background-color: transparent;
+  color: $color-text;
+  border-color: $color-border;
+
+  &:hover:not(:disabled) {
+    background-color: $color-surface;
+    border-color: $color-border;
+  }
+
+  @include focus-ring;
+}
+
+/// Ghost button (no background, no border).
+@mixin btn-ghost {
+  background-color: transparent;
+  color: $color-text-secondary;
+  border-color: transparent;
+
+  &:hover:not(:disabled) {
+    background-color: $color-surface;
+    color: $color-text;
+  }
+
+  @include focus-ring;
+}
+
+/// Danger / destructive action.
+@mixin btn-danger {
+  $danger: palette("accent"); // re-use accent as base
+  background-color: #dc2626;
+  color: #ffffff;
+  border-color: #dc2626;
+
+  &:hover:not(:disabled) {
+    background-color: #b91c1c;
+    border-color: #b91c1c;
+  }
+
+  @include focus-ring;
+}
+
+// ---- Shorthand ----
+
+/// Full button shorthand — applies base + size + variant.
+///
+/// @param {String} $variant ["primary"] - primary | secondary | ghost | danger
+/// @param {String} $size ["md"] - sm | md | lg
+///
+/// @example
+///   .subscribe-btn { @include button("primary", "lg"); }
+///   .cancel-btn    { @include button("ghost", "sm"); }
+@mixin button($variant: "primary", $size: "md") {
+  @include btn-base;
+  @include btn-size($size);
+
+  @if $variant == "primary" {
+    @include btn-primary;
+  } @else if $variant == "secondary" {
+    @include btn-secondary;
+  } @else if $variant == "ghost" {
+    @include btn-ghost;
+  } @else if $variant == "danger" {
+    @include btn-danger;
+  } @else {
+    @error "Unknown button variant `#{$variant}`. Expected primary | secondary | ghost | danger.";
+  }
+}
+
+// ---- Class generator (called by design-system.scss) ----
+
+/// Outputs .btn utility classes for use in HTML.
+@mixin generate-button-classes {
+  .btn {
+    @include btn-base;
+    @include btn-size("md");
+    @include btn-primary;
+
+    // Size modifiers
+    &--sm  { @include btn-size("sm"); }
+    &--lg  { @include btn-size("lg"); }
+
+    // Variant modifiers
+    &--secondary { @include btn-secondary; }
+    &--ghost     { @include btn-ghost; }
+    &--danger    { @include btn-danger; }
+
+    // Full-width
+    &--block {
+      display: flex;
+      width: 100%;
+    }
+
+    // Icon-only (square)
+    &--icon {
+      padding: spacing(2);
+      gap: 0;
+    }
+  }
+}

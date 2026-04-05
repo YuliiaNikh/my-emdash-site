@@ -1,0 +1,59 @@
+@use "sass:map";
+@use "sass:color";
+@use "variables" as *;
+@use "functions" as *;
+
+// ============================================================
+// Color System — mixins for generating palettes & themes
+// ============================================================
+
+/// Generate a full shade palette from a single base color.
+/// Outputs CSS custom properties --color-{name}-50 through -900.
+///
+/// @example
+///   :root { @include color-palette("brand", #0066cc); }
+///   // → --color-brand-50: #f0f6ff; … --color-brand-900: #001f3d;
+@mixin color-palette($name, $base) {
+  --color-#{$name}-50:  #{tint($base, 95%)};
+  --color-#{$name}-100: #{tint($base, 90%)};
+  --color-#{$name}-200: #{tint($base, 75%)};
+  --color-#{$name}-300: #{tint($base, 50%)};
+  --color-#{$name}-400: #{tint($base, 25%)};
+  --color-#{$name}-500: #{$base};
+  --color-#{$name}-600: #{shade($base, 15%)};
+  --color-#{$name}-700: #{shade($base, 30%)};
+  --color-#{$name}-800: #{shade($base, 50%)};
+  --color-#{$name}-900: #{shade($base, 70%)};
+}
+
+/// Apply a full semantic color theme from a palette map.
+/// Outputs one --color-{key} custom property per map entry.
+///
+/// @param {Map} $pal - Map of name → color value
+///
+/// @example
+///   :root       { @include apply-theme($palette-light); }
+///   :root.dark  { @include apply-theme($palette-dark); }
+@mixin apply-theme($pal) {
+  @each $name, $value in $pal {
+    --color-#{$name}: #{$value};
+  }
+}
+
+/// Set text + background colors for a surface.
+///
+/// @param {*} $bg   - background-color value (CSS var or hex)
+/// @param {*} $text - color value (CSS var or hex)
+@mixin surface($bg, $text: $color-text) {
+  background-color: $bg;
+  color: $text;
+}
+
+/// Colored badge / pill background.
+/// Accepts a raw hex base; generates a subtle bg + readable text.
+///
+/// @param {Color} $base - Raw hex color
+@mixin color-badge($base) {
+  background-color: tint($base, 85%);
+  color: shade($base, 30%);
+}

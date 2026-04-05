@@ -1,0 +1,24 @@
+/*
+ * SCSS-only CSS custom properties.
+ *
+ * Tailwind v4 tree-shakes @theme vars that no utility class references.
+ * These tokens are consumed by SCSS (via var()) but never by Tailwind
+ * utilities, so they must live in a separate file that Tailwind doesn't
+ * process.
+ *
+ * Keep values in sync with the @theme block in global.css.
+ */
+:root {
+	--color-ibf-primary: #0f3e8a;
+	--color-ibf-dark: #103161;
+	--color-ibf-beige: #f3f1ef;
+	--color-ibf-body: #444444;
+	--leading-normal: 1.5;
+	--font-size-3xl: 2rem;
+	--font-size-4xl: 2.5rem;
+	--font-size-5xl: 3.5rem;
+	--tracking-tight: -0.03em;
+	--tracking-snug: -0.02em;
+	--width-content: 680px;
+	--duration-base: 180ms;
+}
