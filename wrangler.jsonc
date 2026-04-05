@@ -19,6 +19,12 @@
 			"bucket_name": "my-emdash-media","preview_bucket_name": "my-emdash-media",
 		},
 	],
+	"kv_namespaces": [
+		{
+			"binding": "SESSION",
+			"id": "aacd1f38de7845b78b6fc0e5dbbc0a6c"
+		}
+	],
 	"observability": {
 		"enabled": true,
 	},
